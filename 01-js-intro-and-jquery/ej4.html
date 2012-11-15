@@ -7,21 +7,24 @@ ej4
       </head>
 
       <body>
-	       <script 
-              src="jquery.js">
-         </script>
-	
-	       <form>
-               <input type="button" value="boton!" name="lcdtmab" onclick=" " />
-         </form>
          <script 
-                language="JavaScript" type="text/javascript">alert("ALERTAAAA!!!");
+              src="jquery.js">                                 //jquery library
          </script>
-         <form>
-              <label for=texto">Alias:
-              </label>
-              <input id="texto" type="text" size=40/>
+  
+         <button id="btn">Boton!</button><br>                   //button
+        
+        <form action="">
+              <div><label for="alias">alias:</label>
+              <input type="text" name="seach" value="" id="search" title="Company name or ticker" />  //textbox
+              </div>
+        </form>
+        <script>                                                               
+              $(document).ready(function(){
+              window.onload = function(){ alert("welcome"); }    //Alerta cuando el documento esta READY! 
+              }); 
+          </script>
 
-
-      </body>
+        
+          
+       </body>
 </html>
