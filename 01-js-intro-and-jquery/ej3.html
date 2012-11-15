@@ -1,21 +1,25 @@
-ej2
+ej3
 <!DOCTYPE html>
+
 <html>
+
       <head>
+       
             <meta charset="utf-8" />
             <title>Globant :: Welcome to the HTML5 bootcamp</title>
       </head>
 
-      <body>
-	       <script 
-              src="jquery.js">
-         </script>
-	
-	     <form>
-            <input type="button" value="boton!" name="lcdtmab" onclick=" " />
-      </form>
-      <script 
-             language="JavaScript" type="text/javascript">alert("ALERTAAAA!!!");
-      </script>
+      <body> 
+          <script src="jquery.js"></script>                           //jquery library                          
+                                          
+          <button id="btn">Boton!!</button><br>                       //button
+          <script>                                                               
+              $(document).ready(function(){
+              window.onload = function(){ alert("welcome"); }    // When document is ready ---> Alert 
+              }); 
+          </script>
+      
+      
+
 </body>
 </html>
