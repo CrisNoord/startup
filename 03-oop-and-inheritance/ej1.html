@@ -1,0 +1,54 @@
+<!DOCTYPE html> 
+<html> 
+        <head> 
+        <title>Crear Movie</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+        
+</head> 
+<body>
+        <script type="text/javascript">
+                
+                var movie = Object.create(null);
+
+                Object.defineProperty(movie,  'name', {         value: ''
+                                                        , writable: true 
+                                                        , enumerable: true });
+
+                Object.defineProperty(movie, 'director', { value: ''
+                                                            , writable: true 
+                                                                , enumerable: true });
+
+                Object.defineProperty(movie, 'year', { value: ''
+                                                            , writable: true 
+                                                                , enumerable: true });
+                
+                movie.play = function(){
+                        return "Playing " + this.name + " film." 
+                }
+                console.log(movie.play());
+                movie.stop = function(){
+                    return "The movie has benn stopped"
+                }
+                console.log(movie.stop());
+        </script> 
+
+        <div data-role="page">
+
+            <div data-role="header">
+                 <h1>Crear Movie</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">   
+                 <form>
+                        <a id="create" data-role="button" data-theme="a" data-icon="star">Create Movie</a>
+                 </form> 
+                  
+            </div><!-- /content -->
+
+        </div><!-- /page -->
+
+</body>
+</html>
