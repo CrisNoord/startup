@@ -1,0 +1,69 @@
+<!DOCTYPE html> 
+<html> 
+        <head> 
+        <title>Ejemplo Crear Objeto</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+       
+</head> 
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Crear un Objeto</h1>
+        </div><!-- /header -->
+        <div data-role="content">       
+            <form>
+                <a id="properties" data-role="button" data-theme="a" data-icon="star">List Object Properties</a>
+                <a id="play" data-role="button" data-theme="b" data-icon="arrow-r" data-inline="true">Play</a>
+                <a id="stop" data-role="button" data-theme="b" data-icon="delete" data-inline="true">Stop</a>
+            </form> 
+            <script type="text/javascript">
+                var movie = Object.create(null);
+                Object.defineProperty(movie,  'name', {        
+                                                        value: ''
+                                                        , writable: true 
+                                                        , enumerable: true });
+                Object.defineProperty(movie, 'director', { 
+                                                           value: ''
+                                                           , writable: true 
+                                                           , enumerable: true });
+                Object.defineProperty(movie, 'year', { 
+                                                       value: ''
+                                                       , writable: true 
+                                                       , enumerable: true });
+
+                                                        
+                movie.play = function(){
+                                        return "Playing " + this.name + " film."; 
+                                        }
+                movie.stop = function(){
+                                        return "The Movie has been stopped";
+                }
+
+                var taken = Object.create(movie);
+                taken.name = "Taken";
+                taken.year = 2008;
+                taken.director = "Pierre Morel";
+                $("#properties").click( function(){
+                                                console.log("Taken create :");
+                                                console.log("name = "+taken.name);
+                                                console.log("year = "+taken.year);
+                                                console.log("director = "+taken.director);                          
+                                                 });
+                $("#play").click( function(){
+                                            console.log("reproducir = "+taken.play());
+                                        });
+                $("#stop").click( function(){
+                                            console.log("dejar de reproducir = "+taken.stop());
+                                        });
+
+            </script> 
+                  
+        </div><!-- /content -->
+
+    </div><!-- /page -->
+
+</body>
+</html>
