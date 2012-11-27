@@ -1,0 +1,198 @@
+<!DOCTYPE html> 
+<html> 
+        <head> 
+        <title>Ejemplo Crear Objeto</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+       
+</head> 
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Crear un Objeto</h1>
+        </div><!-- /header -->
+        <div data-role="content">       
+            <form>
+                
+                <a id="play" data-role="button" data-theme="b" data-icon="arrow-r" data-inline="true">Play</a>
+                <a id="stop" data-role="button" data-theme="b" data-icon="delete" data-inline="true">Stop</a>
+                
+            </form> 
+            <script type="text/javascript">
+                                            //OBSERVABLE
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                function ObserverList(){
+                    this.observerList = [];
+                }
+
+                ObserverList.prototype.Add = function( obj ){
+                    return this.observerList.push( obj );
+                };
+
+                ObserverList.prototype.Empty = function(){
+                    this.observerList = [];
+                };
+
+                ObserverList.prototype.Count = function(){
+                    return this.observerList.length;
+                };
+
+
+                ObserverList.prototype.Get = function( index ){
+                    if( index > -1 && index < this.observerList.length ){
+                        return this.observerList[ index ];
+                    }
+                };
+
+                ObserverList.prototype.Insert = function( obj, index ){
+                    var pointer = -1;
+
+                      if( index === 0 ){
+                        this.observerList.unshift( obj );
+                        pointer = index;
+                      }else if( index === this.observerList.length ){
+                        this.observerList.push( obj );
+                        pointer = index;
+                      }
+
+                      return pointer;
+                };
+
+                ObserverList.prototype.IndexOf = function( obj, startIndex ){
+                  var i = startIndex, pointer = -1;
+
+                  while( i < this.observerList.length ){
+                    if( this.observerList[i] === obj ){
+                      pointer = i;
+                    }
+                  }
+
+                  return pointer;
+                };
+
+
+                ObserverList.prototype.RemoveAt = function( index ){
+                  if( index === 0 ){
+                    this.observerList.shift();
+                  }else if( index === this.observerList.length -1 ){
+                    this.observerList.pop();
+                  }
+                };
+
+
+                // Extend an object with an extension
+                function extend( obj, extension ){
+                  for ( var key in obj ){
+                    extension[key] = obj[key];
+                  }
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////
+                function Observable(){
+                    this.observers = new ObserverList();
+                }
+                Observable.prototype.AddObserver = function( observer ){
+                    this.observers.Add( observer );
+                };  
+                Observable.prototype.RemoveObserver = function( observer ){
+                    this.observers.RemoveIndexAt( this.observers.IndexOf( observer, 0 ) );
+                };  
+
+                Observable.prototype.Notify = function( context ){
+                    var observerCount = this.observers.Count();
+                    for(var i=0; i < observerCount; i++){
+                        this.observers.Get(i).Update( context );
+                    }
+                };
+                    //Observable.AddObserver = function(obj){
+                  //  this.observers.push(obj);
+                    //return "se agrego el observer"
+                //};
+                //Observable.AddObserver = function(){
+                  //  return "se agrego el observer"
+                //};
+                //Observable.prototype.Notify = function(event, name){
+                  //  var m_count = this.observers.length;
+                    //for( var i = 0; i < m_count; i++ )
+                      //  this.observers[i].Update(event, name);
+                //};
+                                                               //movieObserver
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                function Observer(){
+                    this.Update = function(){
+                        alert('He sido notificado');
+                        console.log('He sido notificado');
+                    };
+                }
+                                         //MOVIE
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+                function Movie(){ 
+                    this.movieName = '';
+                    this.year = '';
+                    this.director = '';
+}
+        
+                    Object.defineProperty(Movie.prototype, 'name'      , { writable:  true
+                                                                        , configurable: true
+                                                                        , enumerable:   true });
+
+                    Object.defineProperty(Movie.prototype, 'year'   , { writable:  true
+                                                                    , configurable: true
+                                                                    , enumerable:   true });
+
+                    Object.defineProperty(Movie.prototype, 'director'       , { writable:  true
+                                                                            , configurable: true
+                                                                            , enumerable:   true });
+
+                    Movie.play = function(){ return "Reproduciendo " + this.name; };
+
+                    Movie.stop = function(){ return  this.name + " has been stópped"; };
+
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                
+                var taken = Object.create(Movie);
+                    this.name = "Taken";
+                    this.year = 2008;
+                    this.director = "Pierre Morel";
+            
+                extend( new Observable(), taken );
+
+                observadora = Object.create(null);
+
+                extend( new Observer(), observadora );
+
+                observadora.Update = function( value ){
+                    alert('notify arrived');
+                };
+
+                taken.AddObserver( observadora );
+
+                
+                $("#play").click( function(){
+                    console.log("reproducir Pelicula");
+                    console.log(taken.play());
+                    taken.Notify();
+                });
+
+
+                $("#stop").click( function(){
+                    console.log("detener Pelicula");
+                    console.log(taken.stop());
+                    taken.Notify();
+                });
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////       
+                         
+                  
+            </script> 
+                  
+        </div><!-- /content -->
+
+    </div><!-- /page -->
+
+</body>
+</html>
