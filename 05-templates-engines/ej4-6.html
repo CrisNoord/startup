@@ -1,0 +1,94 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta charset="utf-8">
+		<title>My Page</title> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!--SETTING VIEWPORT-->
+		<script type="text/javascript" src="jquery.js"></script>
+		<script src= "libs/handlebars.js"></script>
+		<script src="libs/underscore.js"></script>
+		<script src="libs/dust-full-0.3.0.min.js"></script>
+		<script src="replace.js"></script>
+
+
+
+	</head> 
+	<body>
+		<script id="Template" type="text/x-handlebars-template">
+			<div class="profile-header">
+	        	<img src={{imag}} class="photo" width="80" height="80">
+	            <h1>
+	            	{{firstname}}
+	            	{{lastname}}
+	            </h1>
+	            <p>Locacion: {{city}}</p>
+	       		<p>Industry: {{ind}}</p>	
+	            <h2 class="section-title">{{firstname}} {{lastname}} Overview </h2>
+	            
+	    	   	 <p>Education: 	
+			    	<ul>
+			    		{{#each institution}}
+			    			<li class='listItem'>{{this}}</li>
+			    		{{/each}}
+			    	</ul>
+		    	</p>
+		    	<p>Websites:
+	            	<a href={{link}} target="_blank">{{personalsite}}</a>
+		        </p>            
+	      	</div>
+	        
+	    </script>
+	    <script>
+	    	$(document).ready(function(){
+
+	  			var myData = {
+	  				firstname : 'Cristian',
+	  				lastname : 'Noordermeer',
+	  				imag : 'http://sphotos-a.ak.fbcdn.net/hphotos-ak-ash4/305579_4523892349321_1520423600_n.jpg',
+	  				city : 'Tandil',
+	  				ind : 'Systems',
+	  				link : 'http://www.facebook.com/cristian.noordermeer',
+	  				personalsite : 'FACEBOOK',
+	  				institution : ['IDFS','UNICEN'],
+
+	  			}
+	  			
+
+			    function Dust(myData){ 
+					var context = myData;
+					dust.render("replace", context, function(err, out) {console.log(out);});
+				}
+				function handlebars(myData){
+        			var source = $('#Template').html();
+        			var template = Handlebars.compile(source);
+        			var context = myData;
+        			var html = template(context);
+        			$('#resultadoHandlebars').html(html);
+        		}
+        		function underscoretemplate(myData){
+		        //_.template(templateString, [data], [settings]) 
+		        var templateString = '<div id="underscore"><h1> Underscore Result</h1><div id="profile-header"><div id="profile_info"><img src=<%imag%> class="photo" width="80" height="80"><h1> <%= firstname %> <%= lastname %> <br /></h1> Locacion: <%= city %> <br /> Industry: <%= ind %><br />  Education: <ul> <% _.each(institution, function(inst) { %> <li><%= inst %></li> <% }); %></ul></div></div></div>';
+
+		        var html = _.template(templateString, myData);
+		        $('#resultadounderscore').html(html);
+      }
+
+				
+
+				Dust(myData);
+				handlebars(myData);
+				underscoretemplate(myData);
+	        });
+			
+		</script>
+		<div id="resultadoDust"></div>
+		<div id="resultadoHandlebars"></div>
+		<div id="resultadounderscore"></div>
+
+
+    
+    </body>
+</html>
+
+
+
