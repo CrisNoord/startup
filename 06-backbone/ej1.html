@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8" />
+    	<title> Backbone </title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1"> 		
+	
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	
+    	<script type="text/javascript" src="libs/underscore.js"></script>
+    	<script type="text/javascript" src="libs/backbone.js"></script>
+    	
+  
+	</head>
+	<body>
+		<script>
+                                               //MOVIEMODEL
+		    ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+		    var MovieM = Backbone.Model.extend({
+
+		      initialize: function(){
+		        console.log('modelo inicializado');
+		      },
+		      defaults: {
+		        name: "Taken",
+		      	year: "2008",
+		      }
+		    }); 
+
+		                                       
+		                                       //MODELCOLLECTION
+		    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		    var MovieMCollection = Backbone.Collection.extend({
+		      model: MovieM
+		    });
+                                               //MOVIVIEW
+		    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			(function($){
+
+			      var MView = Backbone.View.extend({
+				        el: $('body'),
+
+				        events: {
+				          'click button#addMovieName': 'addName',
+				          //'click button#addMovieYear': 'addYear'
+				        },
+
+				        initialize: function(){
+					        _.bindAll(this,'render','addName','appendM');
+					          
+					        this.movies = new MovieMCollection();
+					        this.movies.bind('add', this.appendM ); 
+
+					        this.counter = 0; 
+				            this.render();
+				            console.log('Vista inicializada');
+				        },
+				        render: function(){
+							var self = this;
+					        $(this.el).append('<strong> Lista de Pelis:  </strong><br />');      
+				            $(this.el).append('<button id="addMovieName">Add Name</button><br />');
+	    			        //$(this.el).append('<button id="addMovieyear">Add Year</button><br />');
+				            //$(this.el).append('Movie Name '+'<input id="movieName" type="text" value="Taken">'+'<input id="movieYear" type="text" value="2008">');
+		    		        $(this.el).append('Movie Name '+'<input id="movieName" type="text" value="Taken">'+ '-' +'<input id="movieYear" type="text" value="2008">');
+				            $(this.el).append('<ul id="lista"></ul>');
+						},
+						
+
+				        addName: function(){
+					         
+					          this.counter++;
+					          var movie = new MovieM();
+
+					          var movieName = $('#movieName').val();
+					          var movieYear = $('#movieYear').val(); 
+					          console.log('MovieName: '+movieName+movieYear);
+					          movie.set({
+					            name: movieName,
+					            year: movieYear 
+					          });
+
+					          this.movies.add(movie); 
+					          console.log('Movie name: ' + movie.get('name') + movie.get('year'));
+				        },
+				         
+				        //addYear: function(){
+					      //    console.log('Inside addMovie event');
+					      //    this.counter++;
+					      //    var movie = new MovieM();
+
+					      //    var movienYear = $('#movieYear').val(); 
+					      //    console.log('MovieYear: '+movieYear);
+					      //    movie.set({
+					      //      year: movieYear 
+					      //    });
+					    //},-->
+
+
+				        appendM: function(movie){
+				          
+				          $('#lista', this.el).append('<li>' + movie.get('name')+ '-' + movie.get('year') +'</li>');
+				        },
+				        
+
+			      });
+
+			      var movieView = new MView();
+			   })(jQuery);
+
+		</script>
+		
+
+	</body>
+</html>
