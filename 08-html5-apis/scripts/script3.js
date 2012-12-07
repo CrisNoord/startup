@@ -44,8 +44,8 @@ function saveCode(){
             
   
 }
-function dragDrop(){
-    $(document).ready(function(){
+
+$(document).ready(function(){
 
       var dropbox = document.getElementById('dropzone');
 
@@ -54,7 +54,7 @@ function dragDrop(){
       dropbox.addEventListener("dragexit", dragExit, false);
       dropbox.addEventListener("dragover", dragOver, false);
       dropbox.addEventListener("drop", drop, false);
-    });
+});
 
 
       function dragEnter(evt) {
@@ -79,7 +79,7 @@ function dragDrop(){
         var files = evt.dataTransfer.files;
         var count = files.length;
 
-        // Only call the handler if 1 or more files was dropped.
+        
         if (count > 0)
           handleFiles(files);
       }
@@ -92,15 +92,15 @@ function dragDrop(){
 
         var reader = new FileReader();
 
-        // init the reader event handlers
+       
         reader.onloadend = function (evt){
-          var show = evt.target.result; // no lo uso, pero de esta manera podria mostrarlo
+          var show = evt.target.result; 
           var destiny = $('#dragzone');
           destiny.append('<p> File information: <strong>' + file.name + '</strong> type: <strong>'+ file.type + '</strong> size: <strong>'+file.size+'</strong> bytes </p>');
 
         }
 
-        // begin the read operation
+        
         reader.readAsDataURL(file);
       }
-}
+
